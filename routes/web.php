@@ -14,8 +14,9 @@ use App\Http\Controllers\SessionConroller;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentGatewayController;
 use Illuminate\Support\Facades\Route;
-
+use Ixudra\Curl\Facades\Curl;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -109,3 +110,27 @@ Route::get('/about',function(){
 Route::get('/contact',function(){
     return view('contact');
 });
+
+/* curl 
+    reference from "https://github.com/ixudra/curl/blob/master/README.md"
+    1.open rerminal type "composer requre ixudra/curl" press enter
+    2.open config/app.php
+        'providers' => array(
+            //...
+            Ixudra\Curl\CurlServiceProvider::class, //<== enter this line
+        ),
+        'aliases' => array(
+            //...
+            'Curl' => Ixudra\Curl\Facades\Curl::class, //<== enter this line
+        ),
+    3.use Ixudra\Curl\Facades\Curl;  //type top this file    
+*/
+Route::get('/curl', function () {
+    $response = Curl::to('https://www.google.com/')->get();
+    dd($response);
+});
+
+/*Payment Gateway*/
+Route::get('/payment', [PaymentGatewayController::class, 'createPayment'])->name('payment.create');
+Route::post('/payment/store', [PaymentGatewayController::class, 'payment'])->name('payment.store');
+Route::post('/payment/callback', [PaymentGatewayController::class, 'callback'])->name('payment.callback');
