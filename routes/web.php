@@ -84,7 +84,22 @@ Route::get('/students-list',[StudentController::class,'fetchStudents'])->name('s
 Route::post('/student-add',[StudentController::class,'addStudent'])->name('student.add');
 Route::get('/get-student/{id}',[StudentController::class,'getStudentById'])->name('getStudentById');
 Route::put('/update-student',[StudentController::class,'updateStudentById'])->name('updateStudentById');
+/* for softdelete 
+    1. open Models\Student.php
+        add "use Illuminate\Database\Eloquent\SoftDeletes;" on the top
+    2. add "SoftDeletes" 
+        class Student extends Model
+        {
+            use HasFactory,SoftDeletes;
+            ...
+        }
+*/
 Route::delete('/student/{id}',[StudentController::class,'deleteStudentById'])->name('deleteStudentById');
+//get soft deleted list
+Route::get('/student-deleted-list',[StudentController::class,'deleteStudentList'])->name('deleteStudentList');
+//soft delete data UNDO
+Route::get('/student-deleted-undo/{id}',[StudentController::class,'studentDeletedUndo'])->name('studentDeletedUndo');
+
 Route::delete('/selected-students',[StudentController::class,'deleteCheckBoxStudents'])->name('deleteSelectedStudent');
 //Infinite Scroll Pagination 
 Route::get('/student-infinite-scroll',[StudentController::class,'index'])->name('student.infiniteScroll');
@@ -134,3 +149,4 @@ Route::get('/curl', function () {
 Route::get('/payment', [PaymentGatewayController::class, 'createPayment'])->name('payment.create');
 Route::post('/payment/store', [PaymentGatewayController::class, 'payment'])->name('payment.store');
 Route::post('/payment/callback', [PaymentGatewayController::class, 'callback'])->name('payment.callback');
+

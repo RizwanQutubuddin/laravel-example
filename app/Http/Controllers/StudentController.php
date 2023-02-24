@@ -57,4 +57,23 @@ class StudentController extends Controller
         
         return view('student-infinite-scroll-pagination',compact('students'));
     }
+
+    //count soft deleted student list
+    function deleteStudentList()
+    {
+        $students = Student::withTrashed()->get();
+        return view('/student-deleted-list',compact('students'));
+    }
+
+    //UNDO soft deleted students
+    function studentDeletedUndo($id)
+    {
+        $student=Student::find($id);
+        $student->deleted_at=null;
+        $student->save();
+        echo 'hello';
+        die();
+        //$this->deleteStudentList();
+    }
+    
 }
