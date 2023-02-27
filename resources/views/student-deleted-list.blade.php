@@ -13,8 +13,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <button type="button" class="btn btn-danger" id="deleteAllSelectedCheckbox">
-                    UNDO Selected
+                <button type="button" class="btn btn-danger" id="undoAllSelectedCheckbox">
+                    Undo Selected
                 </button>
                 <table id="studentTable" class="table">
                     <thead>
@@ -188,7 +188,6 @@
                         _token: $('input[name="_token"]').val()
                     },
                     success: function(response) {
-                        console.log(response);
                         $("#tableRowId_" + id).remove();
                         $("#deleteModal").modal('toggle');
                     },error: function(err) {
@@ -217,14 +216,14 @@
                 }
             });
 
-            $("#deleteAllSelectedCheckbox").click(function(){
+            $("#undoAllSelectedCheckbox").click(function(){
                 let selecteCheckedBox=[];
                 $('input[name="studentChbox"]:checked').each(function(){
                     selecteCheckedBox.push($(this).prop('value'));
                 });
                 $.ajax({
-                    url:'{{route("deleteSelectedStudent")}}',
-                    type:'DELETE',
+                    url:'{{route("undoDeletedCheckBoxStudents")}}',
+                    type:'post',
                     data:{
                         ids:selecteCheckedBox,
                         _token:$('input[name="_token"]').val()
@@ -235,7 +234,6 @@
                         })
                     }
                 })
-                console.log(selecteCheckedBox);
             });
         });
     </script>

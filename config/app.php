@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -230,6 +231,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Curl' => Ixudra\Curl\Facades\Curl::class,
+        'JWTAuth'=>Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory'=>Tymon\JWTAuth\Facades\JWTFactory::class
     ],
 
 ];

@@ -59,21 +59,24 @@ class StudentController extends Controller
     }
 
     //count soft deleted student list
-    function deleteStudentList()
-    {
-        $students = Student::withTrashed()->get();
+    function deleteStudentList(){
+        $students = Student::onlyTrashed()->get();
         return view('/student-deleted-list',compact('students'));
     }
 
     //UNDO soft deleted students
     function studentDeletedUndo($id)
     {
-        $student=Student::find($id);
-        $student->deleted_at=null;
-        $student->save();
-        echo 'hello';
-        die();
-        //$this->deleteStudentList();
+        $student=Student::where('id', $id)->withTrashed()->restore();
+
+        return $student;
+    }
+
+    //UNDO soft deleted checkbox data students
+    public function undoDeletedCheckBoxStudents(Request $request){
+        $ids=$request->ids;
+        Student::whereIn('id',$ids)->onlyTrashed()->restore();
+        return response()->json(['success'=>'Record has been restored successfully']);
     }
     
 }

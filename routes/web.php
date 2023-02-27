@@ -99,7 +99,9 @@ Route::delete('/student/{id}',[StudentController::class,'deleteStudentById'])->n
 Route::get('/student-deleted-list',[StudentController::class,'deleteStudentList'])->name('deleteStudentList');
 //soft delete data UNDO
 Route::get('/student-deleted-undo/{id}',[StudentController::class,'studentDeletedUndo'])->name('studentDeletedUndo');
-
+//soft delete checkbox data UNDO
+Route::post('/selected-students-undo',[StudentController::class,'undoDeletedCheckBoxStudents'])->name('undoDeletedCheckBoxStudents');
+//delete checkbox data
 Route::delete('/selected-students',[StudentController::class,'deleteCheckBoxStudents'])->name('deleteSelectedStudent');
 //Infinite Scroll Pagination 
 Route::get('/student-infinite-scroll',[StudentController::class,'index'])->name('student.infiniteScroll');
